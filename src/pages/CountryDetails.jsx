@@ -6,13 +6,16 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { FaLongArrowAltLeft } from "react-icons/fa";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import L from "leaflet";
+import markerIcon from "leaflet/dist/images/marker-icon.png";
+import markerShadow from "leaflet/dist/images/marker-shadow.png";
+
 function CountryDetails() {
   /*Country Details States Start */
 
   const { name } = useParams();
   const [country, setCountry] = useState(null);
   const navigate = useNavigate();
-
   /*Country Details States End */
 
   /*Use Effects Start */
@@ -40,14 +43,18 @@ function CountryDetails() {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <Marker position={country.latlng}>
+        <Marker position={country.latlng} icon={
+          L.icon({
+            iconUrl: markerIcon,
+            shadowUrl: markerShadow,
+          })
+        }
+        >
           <Popup>
             <img
               src={country.flags.svg}
               alt="country flag"
-              className="inline-block w-5"
-            />{" "}
-            {country.name.common}
+            />          
           </Popup>
         </Marker>
       </MapContainer>
