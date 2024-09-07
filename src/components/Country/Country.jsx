@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 
 function Country({ country }) {
-  // console.log(country);
   const {
     name: { common },
     region,
@@ -11,7 +10,7 @@ function Country({ country }) {
   return (
     <Link
       to={`country-details/${common}`}
-      className="country rounded-md bg-white shadow-md"
+      className="country rounded-md bg-white dark:bg-[#2b3743] dark:shadow-[#1f2c35] dark:text-white shadow-md"
     >
       <div
         style={{ backgroundImage: `url(${image})` }}
