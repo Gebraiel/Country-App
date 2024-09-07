@@ -15,7 +15,7 @@ function Home() {
   const [regions, setRegions] = useState([]);
   const [selectedRegion, setSelectedRegion] = useState("all");
   const [showedCountries, setShowedCountries] = useState(8);
-
+  const [filteredCountries,setFilteredCountries] = useState([]);
   /*Home States End */
 
   /* Use Effects Start*/
@@ -61,6 +61,14 @@ function Home() {
       .finally(() => setIsLoading(false));
   }, []);
 
+  useEffect(()=>{
+    setFilteredCountries(countries
+      .filter(
+        (country) =>
+          country.region == selectedRegion ||
+          selectedRegion == "all"
+      ))
+  },[countries,selectedRegion])
   /* Use Effects End*/
   return (
     <>
@@ -105,19 +113,14 @@ function Home() {
               <div className="my-10">
                 {countries.length > 0 && (
                   <CountryList
-                    countries={countries
-                      .filter(
-                        (country) =>
-                          country.region == selectedRegion ||
-                          selectedRegion == "all"
-                      )
-                      .slice(0, showedCountries)}
+                    countries={
+                      filteredCountries.slice(0, showedCountries)}
                   />
                 )}
               </div>
               <button
                 className={`${
-                  showedCountries >= countries.length ? "hidden" : "block"
+                  showedCountries >= filteredCountries.length ? "hidden" : "block"
                 } m-auto my-5 rounded font-medium dark:bg-[#2b3743] dark:shadow-[#1f2c35] dark:text-white bg-white shadow-md shadow-cyan-300 p-3`}
                 onClick={() => setShowedCountries(showedCountries + 8)}
               >
